@@ -9,11 +9,18 @@ class App extends Component {
     this.state = {
       taskList: [],
       errorInput: false,
-      dataTaks: false
-
+      dataTaks: false,
+      showInput: false
     };
 
   }
+
+  showInput = () => {
+    this.setState({
+      showInput: true
+    })
+  }
+
 
   validInput = (e) => {
     if (e === '') {
@@ -43,8 +50,10 @@ class App extends Component {
       console.log(task)
       this.setState({
         taskList: [...this.state.taskList, task],
-        dataTaks: true
+        dataTaks: true,
+        showInput: false
       });
+      this.taskInput.current.value = "";
     }
   }
 
@@ -58,9 +67,11 @@ class App extends Component {
     });
 
     this.setState({
-      taskList: coincidences
+      taskList: coincidences,
     });
   }
+
+
 
   render() {
     let today = new Date().toLocaleDateString()
@@ -73,22 +84,22 @@ class App extends Component {
           <div className="containerLeft">
             <input onChange={this.searchByName} className="inputSearch" type="text" placeholder="Search" />
             <div className="grid-container">
-              <button className="selected" data-view="all" onClick={this.state.taskList}>
+              <div className="selected" data-view="all" onClick={this.state.taskList}>
                 <span>ALL TASKS</span>
-              </button>
-              <button className="compInc" data-view="complete">
+              </div>
+              <div className="compInc" data-view="complete" >
                 <span>Complete</span>
-              </button>
-              <button className="compInc" data-view="incomplete">
+              </div>
+              <div className="compInc" data-view="incomplete">
                 <span>Incomplete</span>
-              </button>
-              <button className="newTaks">+ New Task</button>
+              </div>
+              <button className="newTaks" onClick={this.showInput}>+ New Task</button>
             </div>
           </div>
           <div className="containerRight">
             <form id="inputSubmit" onSubmit={this.addTask}>
-              <input className="inputTask" id="inputTask" ref={this.taskInput} type="text" placeholder="Task" />
-              <button className="btnTask" id="btnTask">Save</button>
+              <input className={(this.state.showInput) ? "description is-visible1" : "description"} id="inputTask" ref={this.taskInput} type="text" placeholder="Task" />
+              <button className={(this.state.showInput) ? "description is-visible1" : "description"} id="btnTask">Save</button>
             </form>
             <div className={(this.state.errorInput) ? "description is-visible" : "description"} >INPUT SHOULD NOT BE EMPTY</div>
             <div className="nameToday">
@@ -119,3 +130,7 @@ class App extends Component {
 }
 
 export default App;
+
+
+
+// || this.state
