@@ -8,9 +8,11 @@ class App extends Component {
     super();
     this.state = {
       taskList: [],
+      completed: [],
       errorInput: false,
       dataTaks: false,
-      showInput: false
+      showInput: false,
+      filter: 'showAll'
     };
 
   }
@@ -67,30 +69,98 @@ class App extends Component {
     });
 
     this.setState({
-      taskList: coincidences,
+      taskList: coincidences
     });
   }
 
+  handleInputChange = (e, id) => {
+
+    if (e.target.checked === true) {
+      var coincidencesTask = this.state.taskList.map((task) => {
+        if (task.id === id) {
+          task.completed = true
+          console.log(task)
+        }
+        return task
+      })
+      console.log(coincidencesTask)
+      this.setState({
+        taskList: coincidencesTask
+      })
+
+    }
+  }
+
+
+  handleClickAll = () => {
+    this.setState({
+      filter: 'showAll'
+    })
+    console.log(this.state.filter)
+  }
+
+  handleClickCompleted = () => {
+    this.setState({
+      filter: 'showCompleted'
+    })
+    console.log(this.state.filter)
+  }
+
+  handleClickIncompleted = () => {
+    this.setState({
+      filter: 'showIncompleted'
+    })
+    console.log(this.state.filter)
+  }
+
+  renderTaks = (tasks) => {
+    const tasksList = tasks.filter(task => {
+      if (this.state.filter === "showAll") {
+        console.log("entra");
+        return task;
+      } else if (this.state.filter === "showCompleted") {
+        if (task.completed === true) {
+          return task;
+        }
+      } else {
+        if (task.completed === false) {
+          return task
+        }
+      }
+    });
+    const list = tasksList.map(task => {
+      return (
+        <li>
+          <label className="taskText">
+            <input className="Checkbox" type="checkbox" onChange={(e) => this.handleInputChange(e, task.id)} />
+            <span>{task.name}</span>
+          </label>
+        </li>
+      )
+    });
+    return list;
+  }
 
 
   render() {
     let today = new Date().toLocaleDateString()
     console.log(this.state.taskList)
 
+
     return (
-      <React.Fragment>
+      <React.Fragment >
         <div className="container">
 
           <div className="containerLeft">
             <input onChange={this.searchByName} className="inputSearch" type="text" placeholder="Search" />
             <div className="grid-container">
-              <div className="selected" data-view="all" onClick={this.state.taskList}>
+              <div className="selected" onClick={this.handleClickAll}>
                 <span>ALL TASKS</span>
               </div>
-              <div className="compInc" data-view="complete" >
+              <div className="compInc" onClick={this.handleClickCompleted} >
                 <span>Complete</span>
               </div>
-              <div className="compInc" data-view="incomplete">
+              <div className="compInc" onClick={this.handleClickIncompleted}>
                 <span>Incomplete</span>
               </div>
               <button className="newTaks" onClick={this.showInput}>+ New Task</button>
@@ -108,18 +178,7 @@ class App extends Component {
               <time>{moment({ today }).format('ddd MMM Do YYYY')}</time>
             </div>
             <ul className="taskLine">
-              {this.state.dataTaks && this.state.taskList && this.state.taskList.map(function (task) {
-                return (
-                  <li>
-                    <label className="taskText">
-                      <input className="Checkbox" type="checkbox" />
-                      <span>{task.name}</span>
-
-                    </label>
-                  </li>
-
-                )
-              })}
+              {this.state.dataTaks && this.state.taskList && (this.renderTaks(this.state.taskList))}
 
             </ul>
           </div>
