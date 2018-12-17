@@ -1,0 +1,118 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+
+
+.taskLine {
+  list-style-type: none;
+  text-decoration: none;
+  margin: 50px auto;
+}
+
+.container {
+  display: flex;
+  
+}
+
+.containerLeft{
+  display: flex;
+  flex-direction: column;
+  margin: 160px 20px;
+  width: 25%;
+}
+.description {
+  display: none;
+}
+
+.description.is-visible {
+  display: block;
+  color: red;
+}
+.selected {
+  padding:10px; 
+  background: #2c3e50;
+  border: 1px solid white;
+  color: #fff;
+}
+
+.compInc {
+  padding:10px; 
+  background: #2c322c;
+  color: #fff;
+  border: 1px solid white;
+}
+
+.grid-container{
+  text-align: center;
+  margin: 20px;
+  cursor: pointer;
+}
+
+.inputSearch{
+    color: gray;
+    bottom: 60px;
+    padding: 5px;
+    border-top: 1px solid white;
+    border-left:  1px solid white;
+    border-right:  1px solid white;
+}
+
+.newTaks{
+  padding:10px; 
+  width: 100%;
+  font-size: 18px;
+  background: #2c322c;
+  color: #fff;
+  border: 1px solid white;
+}
+
+
+.containerRight{
+  justify-content: center;
+}
+
+form{
+  display: flex;
+  margin-top: 50px
+}
+.inputTask{
+  width: 656px;
+  height: 32px;
+  border:1px solid rgb(204, 204, 204);
+  border-top-left-radius: 2px; 
+  border-bottom-left-radius: 2px;
+  padding-left: 10px;
+}
+
+.btnTask{
+  border: 1px solid rgb(204, 204, 204);
+  border-left: none;
+  background-color: black;
+  color: white;
+  width: 10%;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+
+input::placeholder {
+  font-size: 17px;
+  border-right: 20px;
+}
+
+.nameToday{
+  margin: 30px 0;
+  
+  font-size: 25px;
+}
