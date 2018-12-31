@@ -8,11 +8,13 @@ class App extends Component {
     super();
     this.state = {
       taskList: [],
+      taskskListMirror: [],
       completed: [],
       errorInput: false,
       dataTaks: false,
       showInput: false,
-      filter: 'showAll'
+      filter: 'showAll',
+
     };
 
   }
@@ -52,6 +54,7 @@ class App extends Component {
       console.log(task)
       this.setState({
         taskList: [...this.state.taskList, task],
+        taskskListMirror: [...this.state.taskskListMirror, task],
         dataTaks: true,
         showInput: false
       });
@@ -59,19 +62,7 @@ class App extends Component {
     }
   }
 
-  searchByName = (e) => {
-    var query = e.target.value.toLowerCase();
 
-    var coincidences = this.state.taskList.filter(function (task) {
-      var taksInLowerCase = task.name.toLowerCase();
-
-      return taksInLowerCase.includes(query);
-    });
-
-    this.setState({
-      taskList: coincidences
-    });
-  }
 
   handleInputChange = (e, id) => {
 
@@ -113,8 +104,10 @@ class App extends Component {
     console.log(this.state.filter)
   }
 
-  renderTaks = (tasks) => {
+  renderTaks = (tasks, e) => {
     const tasksList = tasks.filter(task => {
+
+
       if (this.state.filter === "showAll") {
         console.log("entra");
         return task;
@@ -128,6 +121,7 @@ class App extends Component {
         }
       }
     });
+
     const list = tasksList.map(task => {
       return (
         <li>
@@ -141,6 +135,26 @@ class App extends Component {
     return list;
   }
 
+
+  searchByName = (e) => {
+    let taskList = [...this.state.taskList];
+    var query = e.target.value;
+    if (query !== '') {
+      var coincidences = taskList.filter(task => (
+        task.name.toLowerCase().indexOf(query.toLowerCase()) !== -1
+
+      ))
+      this.setState({
+        taskList: coincidences
+      });
+    } else {
+      this.setState({
+        taskList: this.state.taskskListMirror
+      })
+    }
+
+
+  }
 
   render() {
     let today = new Date().toLocaleDateString()
@@ -193,3 +207,15 @@ export default App;
 
 
 // || this.state
+
+// searchByName = (e) => {
+//   var query = e.target.value.toLowerCase();
+//   var coincidences = this.state.taskList.filter(function (task) {
+//     var taksInLowerCase = task.name.toLowerCase();
+//     return taksInLowerCase.includes(query);
+//   });
+
+//   this.setState({
+//     taskList: coincidences
+//   });
+// }
