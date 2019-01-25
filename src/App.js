@@ -14,7 +14,6 @@ class App extends Component {
       dataTaks: false,
       showInput: false,
       filter: 'showAll',
-
     };
 
   }
@@ -56,7 +55,8 @@ class App extends Component {
         taskList: [...this.state.taskList, task],
         taskskListMirror: [...this.state.taskskListMirror, task],
         dataTaks: true,
-        showInput: false
+        showInput: false,
+        checked: false
       });
       this.taskInput.current.value = "";
     }
@@ -65,10 +65,11 @@ class App extends Component {
 
 
   handleInputChange = (e, id) => {
-
+    e.target.checked = true
     if (e.target.checked === true) {
       var coincidencesTask = this.state.taskList.map((task) => {
         if (task.id === id) {
+          task.checked = true
           task.completed = true
           console.log(task)
         }
@@ -117,7 +118,7 @@ class App extends Component {
         }
       } else {
         if (task.completed === false) {
-          return task
+          return tasks
         }
       }
     });
@@ -126,7 +127,7 @@ class App extends Component {
       return (
         <li>
           <label className="taskText">
-            <input className="Checkbox" type="checkbox" onChange={(e) => this.handleInputChange(e, task.id)} />
+            <input className="Checkbox" checked={task.checked} type="checkbox" onChange={(e) => this.handleInputChange(e, task.id)} />
             <span>{task.name}</span>
           </label>
         </li>
